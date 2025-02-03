@@ -21,7 +21,7 @@ req.flash('success','Logged in')
 
 
 Router.get("/signup",(req,res)=>{
-    res.render('UserRegistration/signUp.ejs')
+    res.render('UserRegistration/SignUp.ejs')
 })
 
 
@@ -57,7 +57,7 @@ Router.post("/signup", WrapAsync(async (req, res, next) => {
         // Catch any errors and handle them properly
         console.error(error);
         req.flash('error', 'Something went wrong during sign-up.');
-        return res.redirect('/signup');  // Redirect back to the signup page or an error page
+        return res.redirect('/SignUp');  // Redirect back to the signup page or an error page
     }
 }));
 

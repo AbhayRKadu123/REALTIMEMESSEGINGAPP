@@ -15,6 +15,8 @@ const MongoStore = require('connect-mongo');
 var flash=require('connect-flash')
 let ChatRoom = require('./Models/Room');
 app.use(methodOverride('_method'));
+const Router=express.Router()
+
 app.use(flash())
 // Set up ejs view engine
 app.set('views', path.join(__dirname, 'views'));

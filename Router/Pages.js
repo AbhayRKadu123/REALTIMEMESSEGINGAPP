@@ -36,8 +36,8 @@ Router.get("/SeeExistingRoom",isAuthenticated,WrapAsync(async(req,res)=>{
     let Result = await ChatRoom.find({ users: { $nin: [req.user._id] } });
 
     console.log(Result)
-    res.render("pages/seeExistingRoom.ejs",{Result})
-}))
+    res.render("pages/SeeExistingRoom.ejs",{Result})
+}));
 Router.put("/JoinExistingRoom/:id",isAuthenticated,WrapAsync(async(req,res)=>{
 let {id}=req.params
 console.log('ID='+id)
