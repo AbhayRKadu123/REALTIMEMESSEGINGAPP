@@ -24,11 +24,11 @@ let Message=require('./Models/Messages')
 app.use(express.static(path.join(__dirname, 'public')));
 // Set up session handling
 app.use(session({
-    secret:  process.env.secret,
+    secret:  process.env.SECRET,
     resave: false,
     saveUninitialized: true,
     store: MongoStore.create({
-        mongoUrl: process.env.mongoUrl, // MongoDB connection string from .env
+        mongoUrl: process.env.MONGO_URI, // MongoDB connection string from .env
         collectionName: 'sessions', // Optional: Customize the collection name
         ttl: 24 * 60 * 60 // Optional: Session expiration time (24 hours)
       }),

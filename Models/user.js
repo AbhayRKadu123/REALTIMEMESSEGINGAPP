@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const { type } = require('os');
 const Schema = mongoose.Schema;
 const passportLocalMongoose = require('passport-local-mongoose');
-mongoose.connect(process.env.mongourl)
+mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('Connected!'));
 const User = new Schema({
 email:{type:String},
