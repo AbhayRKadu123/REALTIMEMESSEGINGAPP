@@ -18,9 +18,13 @@ req.flash('success','Logged in')
     res.redirect('/')
 
 }))
+
+
 Router.get("/signup",(req,res)=>{
-    res.render('UserRegistration/signup.ejs')
+    res.render('UserRegistration/Signup.ejs')
 })
+
+
 Router.post("/signup", WrapAsync(async (req, res, next) => {
     try {
         const { UserName, email, password } = req.body;
