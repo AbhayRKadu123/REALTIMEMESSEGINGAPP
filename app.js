@@ -117,7 +117,7 @@ io.on("connection", (socket) => {
 //   sender: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
 //     room: { type: mongoose.Schema.Types.ObjectId, ref: 'ChatRoom', required: true },
 //     content: { type: String, required: true },
-httpServer.listen(process.env.localhost,()=>{
+httpServer.listen(process.env.LOCALHOST,()=>{
     console.log('listeningss')
 });
 
