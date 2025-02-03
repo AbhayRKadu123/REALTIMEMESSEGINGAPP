@@ -1,0 +1,19 @@
+<% layout('boilerplate') -%>
+
+<div class="container mb-4">
+    <h1 class="display-3">Login</h1>
+    <form method="post" action="/user/login">
+        <div class="mb-3">
+            <label  class="form-label">UserName</label>
+            <input type="text" class="form-control" name="username" id="UserName" aria-describedby="emailHelp">
+            
+          </div>
+       <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Password</label>
+          <input type="password" class="form-control" name="password" id="exampleInputPassword1">
+        </div>
+       
+        <button type="submit" class="btn btn-primary">Login</button>
+      </form>
+
+</div>

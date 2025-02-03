@@ -1,0 +1,67 @@
+<% layout('boilerplate') -%>
+
+<div class="container mt-5">
+  <h2 class="mb-4">Chat Room</h2>
+
+  <div class="row">
+      <!-- Chat for Group -->
+      <div class="col-md-8">
+          <div class="group-name">
+              <div style="font-size: 0;" id="UserId">
+                  <%=User._id%>
+              </div>
+             <div id="UserName"> <%= User.username%></div>
+              <div id="Room">
+                  <%= Room %>
+              </div>
+             <!-- Online Status Indicator -->
+          </div>
+          <span id="Typing">abhay is typing....</span>
+          <div id="ChatContainer" class="chat-container d-flex flex-column">
+            <% for(let i = 0; i < MessageData.length; i++) { %>
+                <% if (String(MessageData[i].sender._id) == String(User._id)) { %>
+                    <div class="message-box received align-self-start">
+                        <p><strong>
+                            <% if (User.username === MessageData[i].sender.username) { %>
+                                You
+                            <% } else { %>
+                                <%= MessageData[i].sender.username %>
+                            <% } %>
+                        </strong> <%= MessageData[i].content %></p>
+                        <span class="timestamp">
+                            <%= new Date(MessageData[i].timestamp).toISOString().slice(0, 16).replace("T", " ") %>
+                        </span>
+                    </div>
+                <% } else { %>
+                    <div class="message-box sent align-self-end">
+                        <p><strong><%= MessageData[i].sender.username %></strong> <%= MessageData[i].content %></p>
+                        <span class="timestamp">
+                            <%= new Date(MessageData[i].timestamp).toISOString().slice(0, 16).replace("T", " ") %>
+                        </span>
+                    </div>
+                <% } %>
+            <% } %>
+        </div>
+        
+          <!-- Input field for sending messages -->
+          <div class="chat-input">
+              <input type="text" class="form-control" id="messageInput" placeholder="Type a message...">
+              <button type="submit" class="btn btn-primary" id="sendButton">Send</button>
+          </div>
+      </div>
+
+      <!-- Active Users Column -->
+      <div class="col-md-4">
+          <h5>Active Users</h5>
+          <ul class="list-group" id="activeUsersList">
+             
+             
+             
+          </ul>
+      </div>
+  </div>
+</div>
+
+  <script src="/socket.io/socket.io.js"></script>
+
+  <script src="/Script/MessagePage.js"></script>

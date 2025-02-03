@@ -1,0 +1,35 @@
+<% layout('boilerplate') -%>
+
+  <div class="container mt-5">
+    <h2 class="display-1">Your Rooms</h2>
+    <h5><span class="display-6">Welcome</span>
+      <%= User.username%>
+    </h5>
+    <div class="row">
+      <%for(let i=0;i<Result.length;i++){%>
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">
+                <%= Result[i].name %>
+              </h5>
+              <div class="d-flex">
+                <!-- Connect Button -->
+                <a class="btn btn-primary" href="/MessagePage?RName=<%= Result[i].name %>">
+                  Connect
+                </a>
+                
+                <!-- Leave Button with margin-left -->
+                <form action="/MessagePage/Delete/<%= Result[i].name %>/<%= User.username%>?_method=PUT" method="post">
+                  <button class="btn btn-danger" type="submit">Leave</button> <!-- Increased margin-left for more space -->
+                </form>
+              </div>
+            </div>
+          </div>
+          
+          
+          
+        </div>
+        <%}%>
+    </div>
+  </div>
