@@ -1,5 +1,5 @@
 require('dotenv').config();
-
+const MONGO_URI = process.env.mongoUrl
 const express = require('express');
 const app = express();
 const session = require('express-session');
