@@ -21,7 +21,7 @@ req.flash('success','Logged in')
 
 
 Router.get("/signup",(req,res)=>{
-    res.render('UserRegistration/Signup.ejs')
+    res.render('UserRegistration/signUp.ejs')
 })
 
 

@@ -17,6 +17,7 @@ let ChatRoom = require('./Models/Room');
 app.use(methodOverride('_method'));
 app.use(flash())
 // Set up ejs view engine
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.engine('ejs', engine);
 let Message=require('./Models/Messages')
