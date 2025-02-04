@@ -25,8 +25,8 @@ Router.get("/signup",(req,res)=>{
 })
 
 
-Router.post("/signup", WrapAsync(async (req, res, next) => {
-    
+Router.post("/signup",async (req, res, next) => {
+    try{
         const { UserName, email, password } = req.body;
 
         // Create a new user object
@@ -48,8 +48,14 @@ Router.post("/signup", WrapAsync(async (req, res, next) => {
 
             // Redirect to the homepage or another route upon successful login
         res.redirect('/');
-        });
-    } ));
+        });}catch(err){
+            req.flash('error',err.message)
+            res.redirect('/user/signup')
+        }
+
+
+
+    } );
 
 
 
