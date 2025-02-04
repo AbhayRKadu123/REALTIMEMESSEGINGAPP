@@ -26,7 +26,7 @@ Router.get("/signup",(req,res)=>{
 
 
 Router.post("/signup", WrapAsync(async (req, res, next) => {
-    try {
+  
         const { UserName, email, password } = req.body;
 
         // Create a new user object
@@ -51,15 +51,10 @@ Router.post("/signup", WrapAsync(async (req, res, next) => {
             req.flash('info', 'User Registered');
 
             // Redirect to the homepage or another route upon successful login
-            return res.redirect('/');
+        res.redirect('/');
         });
-    } catch (error) {
-        // Catch any errors and handle them properly
-        console.error(error);
-        req.flash('error', 'Something went wrong during sign-up.');
-        return res.redirect('/SignUp');  // Redirect back to the signup page or an error page
-    }
-}));
+    } 
+));
 
 
 
