@@ -23,13 +23,10 @@ res.locals.User=req.user;
 let RoomName=RName;
 res.locals.Room=RoomName;
 let MessageData = await Message.find({room:RoomName}).populate('sender');
-if(MessageData.length==0){
-    req.flash('error','Room Does Not Exist')
-   res.redirect('/')
-}else{
+
     console.log('MessageData=='+MessageData)
     res.render('pages/MessagePage.ejs',{MessageData});
-}
+
 
 }));
 
