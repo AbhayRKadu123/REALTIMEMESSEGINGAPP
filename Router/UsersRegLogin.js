@@ -42,11 +42,7 @@ Router.post("/signup", WrapAsync(async (req, res, next) => {
 
         // Log the user in after successful sign-up
         req.login(Result, (error) => {
-            if (error) {
-                // Pass the error to error-handling middleware
-                return next(error);
-            }
-
+          
             // Set flash message for successful login
             req.flash('info', 'User Registered');
 
