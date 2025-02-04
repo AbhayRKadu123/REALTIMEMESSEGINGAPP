@@ -26,7 +26,7 @@ Router.get("/signup",(req,res)=>{
 
 
 Router.post("/signup", WrapAsync(async (req, res, next) => {
-  
+    
         const { UserName, email, password } = req.body;
 
         // Create a new user object
@@ -53,12 +53,11 @@ Router.post("/signup", WrapAsync(async (req, res, next) => {
             // Redirect to the homepage or another route upon successful login
         res.redirect('/');
         });
-    } 
-));
+    } ));
 
 
 
-Router.get('/logout',(req,res)=>{
+Router.get('/logout',WrapAsync(async(req,res)=>{
     req.logOut((err)=>{
         if(err){
             return err;
@@ -67,6 +66,6 @@ Router.get('/logout',(req,res)=>{
 req.flash('success','User Logged Out')
 
     res.redirect('/user/login')
-})
+}))
 
 module.exports=Router;

@@ -36,7 +36,6 @@ app.use(session({
         maxAge: 24 * 60 * 60 * 1000
     }
   }))
-
   var flash=require('connect-flash')
 
 app.use(flash())
@@ -130,15 +129,16 @@ app.use('/user', UserLoginReg);
 app.use('/', Pages);
 
 
-app.use((err,req,res,next)=>{
-    req.flash('error', 'Page not found')
-
-    res.redirect('/')
-})
 
 
 app.use((err,req,res,next)=>{
     req.flash('error',err)
     console.log(err)
+    res.redirect('/')
+})
+
+app.use((req,res,next)=>{
+    req.flash('error', 'Page not found')
+
     res.redirect('/')
 })
