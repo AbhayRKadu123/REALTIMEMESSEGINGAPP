@@ -20,33 +20,23 @@ Router.get("/MessagePage", isAuthenticated, WrapAsync(async(req, res) => {
   
     console.log('Name from query'+req.user)
 res.locals.User=req.user;
-let RoomName=req.session.RoomName||RName;;
+let RoomName=RName;
 res.locals.Room=RoomName;
 let MessageData = await Message.find({room:RoomName}).populate('sender');
-
-
+if(MessageData.length==0){
+    req.flash('error','Room Does Not Exist')
+   res.redirect('/')
+}else{
+    console.log('MessageData=='+MessageData)
     res.render('pages/MessagePage.ejs',{MessageData});
+}
+
 }));
 
 // Create room page (authenticated)
 Router.get("/createRoom", isAuthenticated, WrapAsync(async(req, res) => {
     res.render('pages/CreateRoom.ejs');
 }));
-Router.get("/SeeExistingRoom",isAuthenticated,WrapAsync(async(req,res)=>{
-    let Result = await ChatRoom.find({ users: { $nin: [req.user._id] } });
-
-    console.log(Result)
-    res.render("pages/SeeExistingRoom.ejs",{Result})
-}));
-Router.put("/JoinExistingRoom/:id",isAuthenticated,WrapAsync(async(req,res)=>{
-let {id}=req.params
-console.log('ID='+id)
-let result=await ChatRoom.findByIdAndUpdate(id,{$push:{users:req.user._id}},{ new: true });
-req.session.RoomName=result.name;
-req.flash('msg',`congratulation you are member of  ${result.name} `)
-
-    res.redirect('/MessagePage')
-}))
 Router.post("/createRoom", isAuthenticated, WrapAsync(async(req, res) => {
     console.log(req.body);
     console.log('--------------', req.user);
@@ -73,12 +63,30 @@ Router.post("/createRoom", isAuthenticated, WrapAsync(async(req, res) => {
        req.session.RoomName=Res.name;
        req.flash('success','New Room Created!')
 
-        res.redirect('/MessagePage');
+        res.redirect(`/MessagePage?RName=${Res.name}`);
     }
     
     
    
 }));
+Router.get("/SeeExistingRoom",isAuthenticated,WrapAsync(async(req,res)=>{
+    let Result = await ChatRoom.find({ users: { $nin: [req.user._id] } });
+
+    console.log(Result)
+    res.render("pages/SeeExistingRoom.ejs",{Result})
+}));
+Router.put("/JoinExistingRoom/:id",isAuthenticated,WrapAsync(async(req,res)=>{
+let {id}=req.params
+console.log('ID='+id)
+let result=await ChatRoom.findByIdAndUpdate(id,{$push:{users:req.user._id}},{ new: true });
+// req.session.RoomName=result.name;
+
+req.flash('msg',`congratulation you are member of  ${result.name} `)
+
+
+    res.redirect(`/MessagePage?RName=${result.name}`)
+}))
+
 
 Router.put('/MessagePage/Delete/:RoomName/:UserName',isAuthenticated,WrapAsync(async(req,res)=>{
 let {RoomName,UserName}=req.params;
@@ -86,7 +94,6 @@ await Message.deleteMany({room:RoomName,sender:req.user._id});
 
 let result=await ChatRoom.updateOne({name:RoomName},{$pull:{users:req.user._id}});
 req.flash('success','Room Deleted SuccessFully')
-
     res.redirect('/')
 }))
 

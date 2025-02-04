@@ -12,12 +12,9 @@ const User = require('./Models/user');
 const isAuthenticated = require('./IsAuthenticated');
 const methodOverride = require('method-override');
 const MongoStore = require('connect-mongo');
-var flash=require('connect-flash')
 let ChatRoom = require('./Models/Room');
 app.use(methodOverride('_method'));
-const Router=express.Router()
 
-app.use(flash())
 // Set up ejs view engine
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -39,6 +36,11 @@ app.use(session({
         maxAge: 24 * 60 * 60 * 1000
     }
   }))
+
+  var flash=require('connect-flash')
+
+app.use(flash())
+
 
 // Passport initialization
 app.use(passport.initialize());
@@ -123,17 +125,17 @@ io.on("connection", (socket) => {
 httpServer.listen(process.env.LOCALHOST,()=>{
     console.log('listeningss')
 });
+app.use('/user', UserLoginReg);
 
 app.use('/', Pages);
 
-app.use('/user', UserLoginReg);
 
-
-app.use((req,res,next)=>{
+app.use((err,req,res,next)=>{
     req.flash('error', 'Page not found')
 
     res.redirect('/')
 })
+
 
 app.use((err,req,res,next)=>{
     req.flash('error',err)
